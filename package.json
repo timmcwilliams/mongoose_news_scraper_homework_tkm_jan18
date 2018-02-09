@@ -2,9 +2,10 @@
   "name": "mongoose_news_scraper_homework_tkm_jan18",
   "version": "1.0.0",
   "description": "Homework Bootcamp 1/31/2018 Tim McWilliams Started project on Wednesday 1/31 - Building structure # mongoose_news_scraper_homework_tkm_jan18",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
