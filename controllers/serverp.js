@@ -2,6 +2,12 @@
 var cheerio = require("cheerio");
 // Makes HTTP request for HTML page
 var request = require("request");
+var express = require("express");
+var app = express();
+
+// Set up a static folder (public) for our web app
+
+app.use(express.static("public"));
 
 console.log("\n***********************************\n" +
             "Grabbing every thread name and link\n" +
@@ -13,7 +19,7 @@ request("https://www.si.com/college-basketball", function(error, response, html)
   var $ = cheerio.load(html)
 
   var results = [];
-
+console.log(results);
     $("article.list-item").each(function(i, element){
    
     
