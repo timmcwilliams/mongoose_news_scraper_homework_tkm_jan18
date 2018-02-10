@@ -1,92 +1,96 @@
-// Dependencies
+
+// Dependencies 123
+
 var express = require("express");
 var mongojs = require("mongojs");
-// Require request and cheerio. This makes the scraping possible
 var request = require("request");
 var cheerio = require("cheerio");
-
 // Initialize Express
 var app = express();
 
-// Database configuration
-var databaseUrl = "scraper2";
-var collections = ["scrapedData2"];
+// Set up a static folder (public) for our web app
+// app.use(express.static("public"));
 
-// Hook mongojs configuration to the db variable
+// Database configuration
+// Save the URL of our database as well as the name of our collection
+var databaseUrl = "newsScrape";
+var collections = ["scrapperNews"];
+
+// Use mongojs to hook the database to the db variable
 var db = mongojs(databaseUrl, collections);
+
+// This makes sure that any errors are logged if mongodb runs into an issue
 db.on("error", function(error) {
   console.log("Database Error:", error);
 });
 
-// Main route (simple Hello World Message)
+// Routes
+// 1. At the root path, send a simple hello world message to the browser
 app.get("/", function(req, res) {
-  res.send("Hello News Scraper");
+  res.send("Hello world");
 });
 
-// Retrieve data from the db
-app.get("/all", function(req, res) {
-  // Find all results from the scrapedData collection in the db
-  db.scrapedData2.find({}, function(error, found) {
-    // Throw any errors to the console
-    if (error) {
-      console.log(error);
-    }
-    // If there are no errors, send the data to the browser as json
-    else {
-      res.json(found);
-    }
-  });
-});
+// // 2. At the "/all" path, display every entry in the animals collection
 
-// Scrape data from one site and place it into the mongodb db
-app.get("/scrape2", function(req, res) {
+app.get("/scrape", function(req, res) {
+  // res.send("Hello world scrape");
   // Make a request for the news section of ycombinator
+  request("https://www.reuters.com/news/archive/businessNews?view=page", function(error, response, html){
 
-  request("https://www.reuters.com/news/archive/businessNews?view=page", function(error, response, html) {
-    // Load the html body from request into cheerio
-    var $ = cheerio.load(html);
-    var results = [];
-
-console.log(results);
+  var $ = cheerio.load(html);
+  console.log("hello");
+  // var results = [];
+  // console.log($);
+  // console.log(html);
+    // For each element with a "article" class
+    $(".module").each(function(i, element) {
+      // Save the text and href of each link enclosed in the current element
+      $("story").each(function(i, element) {
+        var image = $(element).children("a").attr("href");
+        var article = $(element).children().first().text();
+       
+  
+  // If this found element had both a title and a link
+  if (image && article) {
+    // Insert the data in the scrapedData db
+    db.newsScrape2.insert({
+      article: article,
+      image: image 
+    },
+      function(err, inserted) {
+        if (err) {
+          // Log the error if one is encountered during the query
+          console.log(err);
+        }
+        else {
+          // Otherwise, log the inserted data
+         
+        }
+      });
+    }
+    });
+ 
   });
+  });
+    res.send("news Complete");
 });
-//     // For each element with a "title" class
-//     $("section.module  ").each(function(i, element) {
-//       // Save the text and href of each link enclosed in the current element
-//       var image = $(element).children("section.module-content").attr("href");
-//       var article = $(element).children("a").first().text();
-    
-
-//       // If this found element had both a title and a link
-//       if (image && article) {
-//         // Insert the data in the scrapedData2 db
-//         // setTimeout(doSomething, 3000);
-//         db.scrapedData2.insert({
-//           article: article,
-//           image: image
-//         },
-//         function(err, inserted) {
-//           if (err) {
-//             // Log the error if one is encountered during the query
-//             console.log(err);
-//           }
-//           else {
-//             // setTimeout(doSomething, 3000);
-//             // Otherwise, log the inserted data
-//             console.log(inserted);
-//           }
-//         });
-//       }
-//     });
-//   });
-
-//   // Send a "Scrape Complete" message to the browser
-// //   setTimeout(doSomething, 3000);
-//   res.send("Scrape Complete");
+app.get("/all", function(req, res) {
+    // res.send("Hello world all");
+    // Query: In our database, go to the animals collection, then "find" everything
+    db.newsScrape2.find({}, function(error, found) {
+      // Log any errors if the server encounters one
+      if (error) {
+        console.log(error);
+      }
+      // Otherwise, send the result of this query to the browser
+      else {
+        res.json(found);
+      }
+    });
+  });
 // });
+  app.listen(7000, function() {
+    console.log("App running on port 7000!");
+  });
+ 
 
-
-// Listen on port 3000
-app.listen(8000, function() {
-  console.log("App running on port 8000!");
-});
