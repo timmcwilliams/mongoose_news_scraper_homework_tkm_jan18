@@ -16,7 +16,7 @@ console.log("\n***********************************\n" +
 
 request("https://www.si.com/college-basketball", function(error, response, html) {
 
-  var $ = cheerio.load(html)
+  var $ = cheerio.load(html);
 
   var results = [];
 console.log(results);

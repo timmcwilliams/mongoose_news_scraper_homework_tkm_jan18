@@ -46,8 +46,7 @@ app.get("/scrape2", function(req, res) {
     // Load the html body from request into cheerio
     var $ = cheerio.load(html);
     var results = [];
-    setTimeout(doSomething, 3000);
-console.log(results);
+    console.log(results);
     // For each element with a "title" class
     $("article.list-item").each(function(i, element) {
       // Save the text and href of each link enclosed in the current element
@@ -58,7 +57,7 @@ console.log(results);
       // If this found element had both a title and a link
       if (image && article) {
         // Insert the data in the scrapedData2 db
-        setTimeout(doSomething, 3000);
+
         db.scrapedData2.insert({
           article: article,
           image: image
@@ -69,7 +68,7 @@ console.log(results);
             console.log(err);
           }
           else {
-            setTimeout(doSomething, 3000);
+      
             // Otherwise, log the inserted data
             console.log(inserted);
           }
@@ -79,7 +78,7 @@ console.log(results);
   });
 
   // Send a "Scrape Complete" message to the browser
-  setTimeout(doSomething, 3000);
+ 
   res.send("Scrape Complete");
 });
 
