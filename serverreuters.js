@@ -20,7 +20,7 @@ db.on("error", function(error) {
 
 // Main route (simple Hello World Message)
 app.get("/", function(req, res) {
-  res.send("Hello Sports Scraper");
+  res.send("Hello News Scraper");
 });
 
 // Retrieve data from the db
@@ -41,49 +41,52 @@ app.get("/all", function(req, res) {
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape2", function(req, res) {
   // Make a request for the news section of ycombinator
-  setTimeout(doSomething, 3000);
-  request("https://www.si.com/college-basketball", function(error, response, html) {
+
+  request("https://www.reuters.com/news/archive/businessNews?view=page", function(error, response, html) {
     // Load the html body from request into cheerio
     var $ = cheerio.load(html);
     var results = [];
-    setTimeout(doSomething, 3000);
+
 console.log(results);
-    // For each element with a "title" class
-    $("article.list-item").each(function(i, element) {
-      // Save the text and href of each link enclosed in the current element
-      var image = $(element).children(".media-img").attr("href");
-      var article = $(element).children().first().text();
+  });
+});
+//     // For each element with a "title" class
+//     $("section.module  ").each(function(i, element) {
+//       // Save the text and href of each link enclosed in the current element
+//       var image = $(element).children("section.module-content").attr("href");
+//       var article = $(element).children("a").first().text();
     
 
-      // If this found element had both a title and a link
-      if (image && article) {
-        // Insert the data in the scrapedData2 db
-        setTimeout(doSomething, 3000);
-        db.scrapedData2.insert({
-          article: article,
-          image: image
-        },
-        function(err, inserted) {
-          if (err) {
-            // Log the error if one is encountered during the query
-            console.log(err);
-          }
-          else {
-            setTimeout(doSomething, 3000);
-            // Otherwise, log the inserted data
-            console.log(inserted);
-          }
-        });
-      }
-    });
-  });
+//       // If this found element had both a title and a link
+//       if (image && article) {
+//         // Insert the data in the scrapedData2 db
+//         // setTimeout(doSomething, 3000);
+//         db.scrapedData2.insert({
+//           article: article,
+//           image: image
+//         },
+//         function(err, inserted) {
+//           if (err) {
+//             // Log the error if one is encountered during the query
+//             console.log(err);
+//           }
+//           else {
+//             // setTimeout(doSomething, 3000);
+//             // Otherwise, log the inserted data
+//             console.log(inserted);
+//           }
+//         });
+//       }
+//     });
+//   });
 
-  // Send a "Scrape Complete" message to the browser
-  setTimeout(doSomething, 3000);
-  res.send("Scrape Complete");
-});
+//   // Send a "Scrape Complete" message to the browser
+// //   setTimeout(doSomething, 3000);
+//   res.send("Scrape Complete");
+// });
 
 
+// Listen on port 3000
 app.listen(8000, function() {
   console.log("App running on port 8000!");
 });
