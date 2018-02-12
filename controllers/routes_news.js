@@ -5,8 +5,8 @@ var cheerio = require("cheerio");
 
 
 // Requiring our Note and Article models
-var Comment = require("../models/Comment.js");
-var Article = require("../models/Article.js");
+var Comment = require("../models/Comments.js");
+var Article = require("../models/news.js");
 
 
 router.get("/", function(req, res) {

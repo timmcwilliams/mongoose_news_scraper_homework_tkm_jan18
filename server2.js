@@ -41,18 +41,19 @@ app.get("/all", function(req, res) {
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape2", function(req, res) {
   // Make a request for the news section of ycombinator
-  setTimeout(doSomething, 3000);
+  // setTimeout(doSomething, 3000);
   request("https://www.si.com/college-basketball", function(error, response, html) {
     // Load the html body from request into cheerio
-    var $ = cheerio.load(html);
-    var results = [];
-    console.log(results);
+    // var $ = cheerio.load(html);
+    // var results = [];
+    // console.log(results);
     // For each element with a "title" class
     $("article.list-item").each(function(i, element) {
       // Save the text and href of each link enclosed in the current element
       var image = $(element).children(".media-img").attr("href");
       var article = $(element).children().first().text();
-    
+
+      
 
       // If this found element had both a title and a link
       if (image && article) {
