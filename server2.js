@@ -44,8 +44,8 @@ app.get("/scrape2", function(req, res) {
   // setTimeout(doSomething, 3000);
   request("https://www.si.com/college-basketball", function(error, response, html) {
     // Load the html body from request into cheerio
-    // var $ = cheerio.load(html);
-    // var results = [];
+    var $ = cheerio.load(html);
+    var results = [];
     // console.log(results);
     // For each element with a "title" class
     $("article.list-item").each(function(i, element) {

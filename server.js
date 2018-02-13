@@ -52,7 +52,7 @@ db.on("error", function(error) {
 app.get("/", function(req, res) {
   res.send("Hello world");
 });
-console.log("line55");
+console.log("line55")
 // // 2. At the "/all" path, display every entry in the animals collection
 app.get("/all", function(req, res) {
   // res.send("Hello world all");
