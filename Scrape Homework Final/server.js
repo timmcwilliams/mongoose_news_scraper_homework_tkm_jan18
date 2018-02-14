@@ -27,16 +27,14 @@ app.use(express.static("public"));
 
 
 mongoose.Promise = Promise;
-if(process.env.MONGODB_URI)
-{
+if(process.env.MONGODB_URI){
 	mongoose.connect(process.env.MONGODB_URI);
+} 
+else {
+mongoose.connect("mongodb://localhost/homeworkscrape1");
+  // useMongoClient: true
 }
-else
-{
-mongoose.connect("mongodb://localhost/homeworkscrape1", {
-  useMongoClient: true
-});
-}
+
 
 
 // Routes
