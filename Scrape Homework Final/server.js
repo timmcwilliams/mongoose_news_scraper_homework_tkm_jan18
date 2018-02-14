@@ -36,7 +36,7 @@ else
 mongoose.connect("mongodb://localhost/homeworkscrape1", {
   useMongoClient: true
 });
-};
+}
 
 
 // Routes
@@ -48,7 +48,7 @@ app.get("/scrape", function(req, res) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every h2 within an article tag, and do the following:
+    // Now, we grab every article.list-item within an article tag, and do the following:
     $("article.list-item").each(function(i, element) {
       // Save an empty result object
       var result = {};
