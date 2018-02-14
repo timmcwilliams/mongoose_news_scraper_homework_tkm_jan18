@@ -4,26 +4,26 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var EXPHBS = require("express-handlebars");
-
+var logger = require("morgan");
+var axios = require("axios");
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
 
 var PORT = process.env.PORT || 9000;
 
-// Initialize Express
 var APP = express();
-
+var db = require("./models");
 // Use body parser
 APP.use(bodyParser.urlencoded({extended: false}));
 
 // Make public a static dir
 APP.use(express.static("public"));
-
+app.use(logger("dev"));
 // Set Handlebars.
 APP.engine("handlebars", EXPHBS({ defaultLayout: "main" }));
 APP.set("view engine", "handlebars");
-
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Database configuration with mongoose
 if(process.env.MONGODB_URI)

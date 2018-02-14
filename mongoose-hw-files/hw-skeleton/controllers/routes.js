@@ -7,19 +7,13 @@ var cheerio = require("cheerio");
 var Comment = require("../models/Comment.js");
 var Article = require("../models/Article.js");
 var Article = require("../models/User.js");
-// router.get("/", function (req, res) {
-	// scrape
-	// save to db
-	//Look into 20.Scraping-With-Mongoose activity server.js "app.get("/scrape"..."" route
-	// as an example to scrape and save to db.
+
 	router.get("/", function (req, res) {
 		// Make a request for the sports section 
 		request("https://www.si.com/college-basketball", function (error, response, html) {
 
-			var $ = cheerio.load(html);
-		
-			var results = [];
-	
+			var $ = cheerio.load(html);	
+			var results = [];	
 			// Save the text and href of each link enclosed in the current element
 			$("article.list-item").each(function (i, element) {
 				var link = $(element).children(".media-img").attr("href");
